@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Users</h1>
+
+        <div class="user-list">
+            {% for user in users %}
+            <a href="{{ url_for('user_movies', user_id=user.id) }}" class="user-btn">
+                <span>{{ user.name }}</span>
+            </a>
+            {% endfor %}
+
+            <a href="/add_user" class="user-btn add-user-btn">+</a>
+        </div>
+    </div>
+</body>
+</html>
