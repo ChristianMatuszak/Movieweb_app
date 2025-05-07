@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Movie</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Add a Movie for {{ user.name }}</h1>
+
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="title">Movie Title</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <button type="submit" class="submit-btn">Add Movie</button>
+        </form>
+
+        <form action="{{ url_for('user_movies', user_id=user.id) }}" method="GET" class="back-button-form">
+            <button type="submit" class="small-btn">Back to Movies</button>
+        </form>
+    </div>
+</body>
+</html>

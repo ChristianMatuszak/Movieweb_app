@@ -1,7 +1,9 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
+migrate = Migrate()
 
 
 class User(db.Model):
@@ -47,6 +49,7 @@ class Movie(db.Model):
     director = db.Column(db.String(100), nullable=False)
     year = db.Column(db.Integer)
     rating = db.Column(db.Float)
+    poster = db.Column(db.String(255))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     def __repr__(self):
@@ -83,6 +86,7 @@ def init_database(app):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
+    migrate.init_app(app, db)
 
     with app.app_context():
         db.create_all()
