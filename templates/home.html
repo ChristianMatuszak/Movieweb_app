@@ -3,15 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to the Movie Database</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>MovieWeb</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='header.png') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Welcome to the Movie Database</h1>
-        <form action="{{ url_for('list_users') }}" method="GET" class="go-to-users-form">
-            <button type="submit" class="small-btn">Go to Users</button>
-        </form>
-    </div>
+
+<body class="min-h-screen flex flex-col justify-center items-center text-white text-center bg-black bg-opacity-50">
+
+    <div class="absolute inset-0 bg-black opacity-60 z-0"></div>
+
+    <main class="z-10 relative px-4">
+        <h1 class="text-5xl md:text-6xl font-bold mb-6">Welcome to MovieWeb</h1>
+        <p class="text-lg md:text-2xl mb-8">Your personal movie collection – simple, clean, effective.</p>
+        <a href="{{ url_for('list_users') }}"
+           class="bg-purple-700 hover:bg-purple-800 text-white px-6 py-3 rounded-lg shadow-lg transition duration-300">
+            View Users
+        </a>
+    </main>
+
+    <!-- Footer -->
+    <footer class="absolute bottom-0 w-full text-center py-4 text-sm text-white z-10">
+        &copy; 2025 MovieWeb. Created by Christian Matuszak
+    </footer>
+
 </body>
 </html>

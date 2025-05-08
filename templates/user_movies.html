@@ -3,51 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ user.name }}'s Movies</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <h1>{{ user.name }}'s Movies</h1>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
 
+    <!-- Container for the page -->
+    <div class="max-w-7xl mx-auto p-8">
+
+        <!-- Heading -->
+        <h1 class="text-3xl font-bold mb-6 text-center">{{ user.name }}'s Movies</h1>
+
+        <!-- Movie Grid -->
         {% if user.movies %}
-            <ul class="movie-list">
-                {% for movie in user.movies %}
-                    <li class="movie-card">
-                        <img src="{{ movie.poster }}" alt="{{ movie.name }} Poster" class="movie-poster">
+        <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {% for movie in user.movies %}
+            <li class="bg-gray-700 rounded-lg shadow-lg overflow-hidden flex flex-col h-[500px]">
+                <img src="{{ movie.poster }}" alt="{{ movie.name }} Poster" style="width: 100%; height: 400px; object-fit: cover;" class="rounded-t-lg">
+                <div class="p-4 flex-grow">
+                    <div class="font-semibold text-xl mb-2">{{ movie.name }}</div>
+                    <div class="text-sm text-gray-300 space-y-1">
+                        {% if movie.director and movie.director != 'Unknown' %}
+                        <div><strong>Director:</strong> {{ movie.director }}</div>
+                        {% endif %}
+                        <div><strong>Year:</strong> {{ movie.year }}</div>
+                        <div><strong>Rating:</strong> {{ movie.rating }}</div>
+                    </div>
+                </div>
+                <div class="flex justify-between p-4 bg-gray-800">
+                    <form action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}" method="GET">
+                        <button type="submit" class="bg-yellow-500 text-white py-1 px-3 rounded-md hover:bg-yellow-600 transition duration-300">✎ Edit</button>
+                    </form>
+                    <form action="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}" method="POST">
+                        <button type="submit" class="bg-red-600 text-white py-1 px-3 rounded-md hover:bg-red-700 transition duration-300">🗑 Delete</button>
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
 
-                        <div class="movie-info">
-                            <div class="movie-title">{{ movie.name }}</div><br><br>
-                            <div class="movie-details">
-                                {% if movie.director and movie.director != 'Unknown' %}
-                                    <div class="detail-item"><strong>Director:</strong> {{ movie.director }}</div>
-                                {% endif %}
-                                <div class="detail-item"><strong>Year:</strong> {{ movie.year }}</div>
-                                <div class="detail-item"><strong>Rating:</strong> {{ movie.rating }}</div>
-                            </div>
-                        </div>
-
-                        <div class="movie-actions">
-                            <form action="{{ url_for('update_movie', user_id=user.id, movie_id=movie.id) }}" method="GET" style="display:inline;">
-                                <button type="submit" class="small-btn">✎ Edit</button>
-                            </form>
-                            <form action="{{ url_for('delete_movie', user_id=user.id, movie_id=movie.id) }}" method="POST" style="display:inline;">
-                                <button type="submit" class="small-btn delete">🗑 Delete</button>
-                            </form>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
+            <!-- Add Movie Card (styled like Add User) -->
+            <li>
+                <a href="{{ url_for('add_movie', user_id=user.id) }}"
+                   class="bg-gradient-to-r from-green-500 to-teal-500 p-6 rounded-lg shadow-lg text-center flex items-center justify-center h-[500px] hover:scale-105 transform transition-all duration-300">
+                    <span class="text-5xl text-white">+</span>
+                </a>
+            </li>
+        </ul>
         {% else %}
-            <p>No movies added yet.</p>
+        <p class="text-center text-xl text-gray-300">No movies added yet.</p>
+
+        <!-- Add Movie Button when no movies exist -->
+        <div class="mt-8 text-center">
+            <a href="{{ url_for('add_movie', user_id=user.id) }}" class="inline-block bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
+                Add Movie
+            </a>
+        </div>
         {% endif %}
 
-        <!-- Add Movie Button -->
-        <a href="{{ url_for('add_movie', user_id=user.id) }}" class="add-user-btn">+</a>
-
-        <!-- Back to Users Button -->
-        <form action="{{ url_for('list_users') }}" method="GET" class="back-button-form">
-            <button type="submit" class="small-btn">Back to Users</button>
-        </form>
     </div>
+
+    <!-- Back to Users Button (fixed to bottom-right of page) -->
+    <div class="flex justify-end mb-6">
+    <form action="{{ url_for('list_users') }}" method="GET"
+      class="fixed top-6 right-6 z-50">
+    <button type="submit"
+            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-5 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
+        Back to Users
+    </button>
+    </form>
+    </div>
+
 </body>
 </html>
