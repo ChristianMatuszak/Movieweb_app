@@ -7,13 +7,10 @@
 </head>
 <body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
 
-    <!-- Container for the page -->
     <div class="max-w-7xl mx-auto p-8">
 
-        <!-- Heading -->
         <h1 class="text-3xl font-bold mb-6 text-center">{{ user.name }}'s Movies</h1>
 
-        <!-- Movie Grid -->
         {% if user.movies %}
         <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {% for movie in user.movies %}
@@ -40,7 +37,6 @@
             </li>
             {% endfor %}
 
-            <!-- Add Movie Card (styled like Add User) -->
             <li>
                 <a href="{{ url_for('add_movie', user_id=user.id) }}"
                    class="bg-gradient-to-r from-green-500 to-teal-500 p-6 rounded-lg shadow-lg text-center flex items-center justify-center h-[500px] hover:scale-105 transform transition-all duration-300">
@@ -51,7 +47,6 @@
         {% else %}
         <p class="text-center text-xl text-gray-300">No movies added yet.</p>
 
-        <!-- Add Movie Button when no movies exist -->
         <div class="mt-8 text-center">
             <a href="{{ url_for('add_movie', user_id=user.id) }}" class="inline-block bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
                 Add Movie
@@ -61,7 +56,6 @@
 
     </div>
 
-    <!-- Back to Users Button (fixed to bottom-right of page) -->
     <div class="flex justify-end mb-6">
     <form action="{{ url_for('list_users') }}" method="GET"
       class="fixed top-6 right-6 z-50">
