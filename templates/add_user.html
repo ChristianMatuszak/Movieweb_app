@@ -4,17 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add User</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <h1>Add a New User</h1>
+<body class="bg-gray-800 text-white min-h-screen">
 
-        <form method="POST">
-            <label for="name">User Name:</label>
-            <input type="text" id="name" name="name" required>
-            <button type="submit" class="submit-btn">Add User</button>
+    <div class="max-w-lg mx-auto p-8">
+
+        <h1 class="text-3xl font-bold mb-6 text-center">Add a New User</h1>
+
+        <form method="POST" class="bg-gray-700 p-6 rounded-lg shadow-lg">
+
+            <div class="mb-4">
+                <label for="name" class="block text-sm font-medium mb-2">User Name:</label>
+                <input type="text" id="name" name="name" class="w-full p-3 bg-gray-600 text-white rounded-md border-2 border-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500" required>
+            </div>
+
+            <button type="submit" class="w-full py-3 bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white font-bold rounded-lg transition duration-300 hover:scale-105">
+                Add User
+            </button>
         </form>
     </div>
+
+    <div class="flex justify-end mb-6">
+    <form action="{{ url_for('list_users') }}" method="GET"
+      class="fixed top-6 right-6 z-50">
+    <button type="submit"
+            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-5 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
+        Back to Users
+    </button>
+    </form>
+    </div>
+
 </body>
 </html>
